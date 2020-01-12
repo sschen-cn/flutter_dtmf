@@ -33,16 +33,39 @@ class FlutterDtmfPlugin: MethodCallHandler {
         playTone(digits)
       }
     }
-    else {
+    else if (call.method == "playCallWaiting") {
+      val streamType = AudioManager.STREAM_VOICE_CALL
+      val volume = 100
+      val toneGenerator = ToneGenerator(streamType, volume)
+      val toneType = ToneGenerator.TONE_SUP_RINGTONE
+      val durationMs = 1000
+      toneGenerator.startTone(toneType, durationMs)
+    }
+    else if (call.method == "playCallAlert") {
+      val streamType = AudioManager.STREAM_VOICE_CALL
+      val volume = 100
+      val toneGenerator = ToneGenerator(streamType, volume)
+      val toneType = ToneGenerator.TONE_SUP_CONFIRM
+      val durationMs = 100
+      toneGenerator.startTone(toneType, durationMs)
+    }
+    else if (call.method == "playCallTerm") {
+      val streamType = AudioManager.STREAM_VOICE_CALL
+      val volume = 100
+      val toneGenerator = ToneGenerator(streamType, volume)
+      val toneType = ToneGenerator.TONE_SUP_RADIO_NOTAVAIL
+      val durationMs = 200
+      toneGenerator.startTone(toneType, durationMs)
+    } else {
       result.notImplemented()
     }
   }
 
   private fun playTone(digits: String) {
     val streamType = AudioManager.STREAM_MUSIC
-    val volume = 50
+    val volume = 100
     val toneGenerator = ToneGenerator(streamType, volume)
-
+    
     for (i in digits.indices)
     {
       val toneType = getToneType(digits[i].toString())
@@ -70,6 +93,9 @@ class FlutterDtmfPlugin: MethodCallHandler {
       "B" -> return ToneGenerator.TONE_DTMF_B
       "C" -> return ToneGenerator.TONE_DTMF_C
       "D" -> return ToneGenerator.TONE_DTMF_D
+//      "X" -> return ToneGenerator.TONE_SUP_RINGTONE
+//      "Y" -> return ToneGenerator.TONE_SUP_CONFIRM
+//      "Z" -> return ToneGenerator.TONE_SUP_RADIO_NOTAVAIL
     }
 
     return -1

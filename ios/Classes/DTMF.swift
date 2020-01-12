@@ -7,7 +7,7 @@ public typealias DTMFType = (Float, Float)
 public typealias MarkSpaceType = (Float, Float)
 public class DTMF
 {
-    public static let tone1     = DTMFType(1209.0, 697.0)
+    public static let tone1     = DTMFType(800.0, 800.0)
     public static let tone2     = DTMFType(1336.0, 697.0)
     public static let tone3     = DTMFType(1477.0, 697.0)
     public static let tone4     = DTMFType(1209.0, 770.0)
@@ -23,10 +23,11 @@ public class DTMF
     public static let toneB     = DTMFType(1633.0, 770.0)
     public static let toneC     = DTMFType(1633.0, 852.0)
     public static let toneD     = DTMFType(1633.0, 941.0)
-    public static let toneCalling     = DTMFType(1633.0, 941.0)
+    public static let toneCallWaiting     = DTMFType(440.0, 480.0)
 
     public static let standard  = MarkSpaceType(40.0, 40.0)
     public static let motorola  = MarkSpaceType(250.0, 250.0)
+    public static let long  = MarkSpaceType(1000.0, 40.0)
     public static let whelen    = MarkSpaceType(40.0, 20.0)
     public static let fast      = MarkSpaceType(20.0, 20.0)
 
@@ -81,6 +82,7 @@ extension DTMF
         case toneD     = "D"
         case toneStar  = "*"
         case tonePound = "#"
+        case toneCallWaiting = "X"
     }
 
     public static func toneForCharacter(character: Character) -> DTMFType?
@@ -134,6 +136,9 @@ extension DTMF
             break
         case characterForTone.tonePound.rawValue:
             tone = DTMF.tonePound
+            break
+        case characterForTone.toneCallWaiting.rawValue:
+            tone = DTMF.toneCallWaiting
             break
         default:
             break

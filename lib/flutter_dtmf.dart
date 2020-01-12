@@ -20,4 +20,13 @@ class FlutterDtmf {
     };
     await _channel.invokeMethod('playTone', args);
   }
+  static Future<void> playCallWaiting() async {
+    await _channel.invokeMethod('playCallWaiting');
+  }
+  static Future<void> playCallAlert() async {
+    await _channel.invokeMethod('playCallAlert');
+  }
+  static Future<void> playCallTerm() async {
+    await _channel.invokeMethod('playCallTerm');
+  }
 }

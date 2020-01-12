@@ -33,10 +33,15 @@ public class SwiftFlutterDtmfPlugin: NSObject, FlutterPlugin {
             let samplingRate =  arguments?["samplingRate"] as? Double ?? 8000.0
             playTone(digits: digits, samplingRate: samplingRate)
         }
+         else if call.method == "playCallWaiting"
+         {
+            let samplingRate =  arguments?["samplingRate"] as? Double ?? 8000.0
+            playTone(digits: "X", samplingRate: samplingRate, markSpace: DTMF.long)
+         }
 
     }
     
-    func playTone(digits: String, samplingRate: Double)
+    func playTone(digits: String, samplingRate: Double, markSpace: MarkSpaceType = DTMF.motorola)
     {
        
         let _sampleRate = Float(samplingRate)
@@ -47,7 +52,7 @@ public class SwiftFlutterDtmfPlugin: NSObject, FlutterPlugin {
             // fill up the buffer with some samples
             var allSamples = [Float]()
             for tone in tones {
-                let samples = DTMF.generateDTMF(tone, markSpace: DTMF.motorola, sampleRate: _sampleRate)
+                let samples = DTMF.generateDTMF(tone, markSpace: markSpace, sampleRate: _sampleRate)
                 allSamples.append(contentsOf: samples)
             }
             
