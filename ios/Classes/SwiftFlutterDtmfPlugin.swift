@@ -33,11 +33,21 @@ public class SwiftFlutterDtmfPlugin: NSObject, FlutterPlugin {
             let samplingRate =  arguments?["samplingRate"] as? Double ?? 8000.0
             playTone(digits: digits, samplingRate: samplingRate)
         }
-         else if call.method == "playCallWaiting"
-         {
+        else if call.method == "playCallWaiting"
+        {
             let samplingRate =  arguments?["samplingRate"] as? Double ?? 8000.0
             playTone(digits: "X", samplingRate: samplingRate, markSpace: DTMF.long)
-         }
+        }
+        else if call.method == "playCallAlert"
+        {
+            let samplingRate =  arguments?["samplingRate"] as? Double ?? 8000.0
+            playTone(digits: "Y", samplingRate: samplingRate, markSpace: DTMF.short)
+        }
+        else if call.method == "playCallTerm"
+        {
+            let samplingRate =  arguments?["samplingRate"] as? Double ?? 8000.0
+            playTone(digits: "Z", samplingRate: samplingRate, markSpace: DTMF.middle)
+        }
 
     }
     
