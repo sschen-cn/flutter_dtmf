@@ -1,5 +1,13 @@
 # flutter_dtmf
 
+extends flutter_dtmf
+```
+/// 等待接听振铃中
+FlutterDtmf.playCallWaiting()
+FlutterDtmf.playCallAlert()
+FlutterDtmf.playCallTerm()
+```
+
 Generates DTFM Tones for Flutter Application. You can change the Sampling Rate to get a different output for iOS.
 
 ## Usage
