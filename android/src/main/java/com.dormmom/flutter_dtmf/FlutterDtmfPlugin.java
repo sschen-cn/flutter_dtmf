@@ -13,6 +13,9 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  * FlutterDtmfPlugin
  */
 public class FlutterDtmfPlugin implements MethodCallHandler {
+    private ToneGenerator generator;
+    private ToneGenerator voiceGenerator;
+
     /**
      * Plugin registration.
      */
@@ -46,6 +49,18 @@ public class FlutterDtmfPlugin implements MethodCallHandler {
                 playVoiceTone(ToneGenerator.TONE_SUP_RADIO_NOTAVAIL, 200);
                 result.success(null);
                 break;
+            case "releaseGenerator":
+                if (generator != null) {
+                    generator.stopTone();
+                    generator.release();
+                    generator = null;
+                }
+                if (voiceGenerator != null) {
+                    voiceGenerator.stopTone();
+                    voiceGenerator.release();
+                    voiceGenerator = null;
+                }
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -53,15 +68,25 @@ public class FlutterDtmfPlugin implements MethodCallHandler {
     }
 
     private void playVoiceTone(int toneType, int durationMs) {
-        ToneGenerator generator = new ToneGenerator(AudioManager.STREAM_VOICE_CALL, 100);
-        generator.startTone(toneType, durationMs);
+        try {
+            if (generator == null) {
+                generator = new ToneGenerator(AudioManager.STREAM_VOICE_CALL, 100);
+            }
+            generator.startTone(toneType, durationMs);
+        } catch (Exception ignore) {
+        }
     }
 
     private void playTone(String digits) {
-        ToneGenerator generator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-        for (int i = 0; i < digits.length(); i++) {
-            int toneType = getToneType(digits.charAt(i));
-            generator.startTone(toneType, 200);
+        try {
+            if (voiceGenerator == null) {
+                voiceGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+            }
+            for (int i = 0; i < digits.length(); i++) {
+                int toneType = getToneType(digits.charAt(i));
+                voiceGenerator.startTone(toneType, 200);
+            }
+        } catch (Exception ignore) {
         }
     }
 

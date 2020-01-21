@@ -29,4 +29,7 @@ class FlutterDtmf {
   static Future<void> playCallTerm() async {
     await _channel.invokeMethod('playCallTerm');
   }
+  static Future<void> releaseGenerator() async {
+    await _channel.invokeMethod('releaseGenerator');
+  }
 }
