@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FlutterDtmf {
-  static const MethodChannel _channel = MethodChannel('flutter_dtmf');
+  static const MethodChannel _channel =
+      const MethodChannel('flutter_dtmf');
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');

@@ -26,7 +26,7 @@ public class DTMF
     public static let toneCallWaiting     = DTMFType(440.0, 480.0)
     public static let playCallAlert     = DTMFType(350.0, 440.0)
     public static let playCallTerm     = DTMFType(425.0, 425.0)
-
+    
     public static let standard  = MarkSpaceType(40.0, 40.0)
     public static let motorola  = MarkSpaceType(250.0, 250.0)
     public static let whelen    = MarkSpaceType(40.0, 20.0)
@@ -34,35 +34,35 @@ public class DTMF
     public static let long  = MarkSpaceType(1000.0, 40.0)
     public static let middle  = MarkSpaceType(200.0, 40.0)
     public static let short  = MarkSpaceType(100.0, 40.0)
-
-
-
+    
+    
+    
     /**
      Generates a series of Float samples representing a DTMF tone with a given mark and space.
      
-        - parameter DTMF: takes a DTMFType comprised of two floats that represent the desired tone frequencies in Hz.
-        - parameter markSpace: takes a MarkSpaceType comprised of two floats representing the duration of each in milliseconds. The mark represents the length of the tone and space the silence.
-        - parameter sampleRate: the number of samples per second (Hz) desired.
-        - returns: An array of Float that contains the Linear PCM samples that can be fed to AVAudio.
+     - parameter DTMF: takes a DTMFType comprised of two floats that represent the desired tone frequencies in Hz.
+     - parameter markSpace: takes a MarkSpaceType comprised of two floats representing the duration of each in milliseconds. The mark represents the length of the tone and space the silence.
+     - parameter sampleRate: the number of samples per second (Hz) desired.
+     - returns: An array of Float that contains the Linear PCM samples that can be fed to AVAudio.
      */
     public static func generateDTMF(_ DTMF: DTMFType, markSpace: MarkSpaceType = motorola, sampleRate: Float = 44100.0) -> [Float]
     {
         let toneLengthInSamples = 10e-4 * markSpace.0 * sampleRate
         let silenceLengthInSamples = 10e-4 * markSpace.1 * sampleRate
-
+        
         var sound = [Float](repeating: 0, count: Int(toneLengthInSamples + silenceLengthInSamples))
         let twoPI:Float = 2.0 * .pi
-
+        
         for i in 0 ..< Int(toneLengthInSamples) {
             // Add first tone at half volume
             let sample1 = 0.5 * sin(Float(i) * twoPI / (sampleRate / DTMF.0));
-
+            
             // Add second tone at half volume
             let sample2 = 0.5 * sin(Float(i) * twoPI / (sampleRate / DTMF.1));
-
+            
             sound[i] = sample1 + sample2
         }
-
+        
         return sound
     }
 }
@@ -90,7 +90,7 @@ extension DTMF
         case playCallAlert = "Y"
         case playCallTerm = "Z"
     }
-
+    
     public static func toneForCharacter(character: Character) -> DTMFType?
     {
         var tone: DTMFType?
@@ -155,10 +155,10 @@ extension DTMF
         default:
             break
         }
-
+        
         return tone
     }
-
+    
     public static func tonesForString(_ string: String) -> [DTMFType]?
     {
         var tones = [DTMFType]()
@@ -167,7 +167,7 @@ extension DTMF
                 tones.append(tone)
             }
         }
-
+        
         return tones.count > 0 ? tones : nil
     }
 }

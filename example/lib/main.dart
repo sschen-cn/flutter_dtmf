@@ -29,9 +29,9 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: RaisedButton(child: Text("Play DTMF"),onPressed: ()async {
-            await FlutterDtmf.playTone(digits: "#", samplingRate: 8000);
-          },)
+            child: RaisedButton(child: Text("Play DTMF"),onPressed: ()async {
+              await FlutterDtmf.playTone(digits: "#", samplingRate: 8000);
+            },)
         ),
       ),
     );

@@ -4,26 +4,25 @@ import AVFoundation
 import CallKit
 
 public class SwiftFlutterDtmfPlugin: NSObject, FlutterPlugin {
-
     var _engine: AVAudioEngine
     var _player:AVAudioPlayerNode
     var _mixer: AVAudioMixerNode
     
-  public override init() {
-    _engine = AVAudioEngine();
-    _player = AVAudioPlayerNode()
-    _mixer = _engine.mainMixerNode;
-    
-    _engine.attach(_player)
-    
-    super.init()
+    public override init() {
+        _engine = AVAudioEngine();
+        _player = AVAudioPlayerNode()
+        _mixer = _engine.mainMixerNode;
+        
+        _engine.attach(_player)
+        
+        super.init()
     }
     
-  public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "flutter_dtmf", binaryMessenger: registrar.messenger())
-    let instance = SwiftFlutterDtmfPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let channel = FlutterMethodChannel(name: "flutter_dtmf", binaryMessenger: registrar.messenger())
+        let instance = SwiftFlutterDtmfPlugin()
+        registrar.addMethodCallDelegate(instance, channel: channel)
+    }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         let arguments = call.arguments as? NSDictionary
@@ -48,14 +47,14 @@ public class SwiftFlutterDtmfPlugin: NSObject, FlutterPlugin {
             let samplingRate =  arguments?["samplingRate"] as? Double ?? 8000.0
             playTone(digits: "Z", samplingRate: samplingRate, markSpace: DTMF.middle)
         }
-
+        
     }
     
     func playTone(digits: String, samplingRate: Double, markSpace: MarkSpaceType = DTMF.motorola)
     {
-       
+        
         let _sampleRate = Float(samplingRate)
-
+        
         if let tones = DTMF.tonesForString(digits) {
             let audioFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: Double(_sampleRate), channels: 2, interleaved: false)!
             
@@ -85,8 +84,7 @@ public class SwiftFlutterDtmfPlugin: NSObject, FlutterPlugin {
             
             _player.scheduleBuffer(buffer, at:nil,completionHandler:nil)
             _player.play()
-
+            
+        }
     }
-  }
-  
 }
