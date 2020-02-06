@@ -3,8 +3,6 @@ package com.dormmom.flutter_dtmf;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 
-import androidx.annotation.NonNull;
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -20,7 +18,7 @@ public class FlutterDtmfPlugin implements FlutterPlugin, MethodCallHandler {
     private ToneGenerator voiceGenerator;
 
     @Override
-    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    public void onAttachedToEngine(FlutterPluginBinding flutterPluginBinding) {
         final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_dtmf");
         channel.setMethodCallHandler(new FlutterDtmfPlugin());
     }
@@ -40,7 +38,7 @@ public class FlutterDtmfPlugin implements FlutterPlugin, MethodCallHandler {
     }
 
     @Override
-    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+    public void onMethodCall(MethodCall call, Result result) {
         switch (call.method) {
             case "getPlatformVersion":
                 result.success("Android " + android.os.Build.VERSION.RELEASE);
@@ -145,6 +143,6 @@ public class FlutterDtmfPlugin implements FlutterPlugin, MethodCallHandler {
     }
 
     @Override
-    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    public void onDetachedFromEngine(FlutterPluginBinding binding) {
     }
 }
