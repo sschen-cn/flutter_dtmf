@@ -21,8 +21,8 @@ public class FlutterDtmfPlugin implements FlutterPlugin, MethodCallHandler {
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-//        final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_dtmf");
-//        channel.setMethodCallHandler(new FlutterDtmfPlugin());
+        final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_dtmf");
+        channel.setMethodCallHandler(new FlutterDtmfPlugin());
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
