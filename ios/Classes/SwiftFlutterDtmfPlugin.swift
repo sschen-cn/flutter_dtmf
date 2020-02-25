@@ -74,6 +74,10 @@ public class SwiftFlutterDtmfPlugin: NSObject, FlutterPlugin {
                 let frameMemory = channelMemory[channelIndex]
                 memcpy(frameMemory, allSamples, Int(frameCount) * MemoryLayout<Float>.size)
             }
+
+            if _engine.isRunning{
+                _engine.pause()
+            }
             _engine.connect(_player, to:_mixer, format:audioFormat)
             
             do {
